@@ -37,7 +37,7 @@
 <h1 align="center">UBID</h1>
 
   <p align="center">
-     <b>UBID</b> facilitates distributed key generation using <b>FROST</b>, a threshold Schnorr signature scheme. Participants contribute to a multi-party computation protocol, generating key shares without learning the complete secret. Made on top of the <b><a href="https://fluence.dev/">Fluence Netowork</a></b> providing decentralized serverless compute/
+     <b>UBID</b> is a DID solution for the UBIT ecosystem 
     <br />
     <a href="https://github.com/Sahilgill24/UBID"><strong>Explore the docs »</strong></a>
     <br />
