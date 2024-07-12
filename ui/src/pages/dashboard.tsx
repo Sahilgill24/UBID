@@ -11,16 +11,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { ethers } from "ethers";
-import { getAsset } from "node:sea";
+import { getIcapAddress } from "ethers/lib/utils";
+
+
 
 export default function Dashboard() {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [did, setDID] = useState("");
+  const [time,settime]=useState('');
+  const [Controller_address,setController_address]=useState('');
 
   const provider = new ethers.providers.JsonRpcProvider('https://testnet-rpc.ubitscan.io/');
-  const signer = provider.getSigner('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
+  // const signer = provider.getSigner('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
   const wallet = new ethers.Wallet('6b99711d264ac83b798ec10389f34afe53e6f6c6fdbb821b139aba9fd4cf9f2c', provider)
 
   const contractAddress = '0x35F72125fF89E35E009Def8d5ab3342ceF3de18d';
@@ -221,79 +225,113 @@ export default function Dashboard() {
     setDID(DID);
     console.log(name)
     if (address || email) {
-      const credit_c = ethers.utils.formatBytes32String(address);
-      const email_c = ethers.utils.formatBytes32String(email);
-      const validity = 3600;
-      const setattribute = await DIDregistry.setAttribute(name, credit_c, email_c, validity, { gasLimit: '1000000' });
+      const attribute_hash = ethers.utils.formatBytes32String(address);
+      const email_hash = ethers.utils.formatBytes32String(email);
+      
+      const setattribute = await DIDregistry.setAttribute(name, attribute_hash, email_hash, time, { gasLimit: '1000000' });
       console.log(setattribute.hash);
-      const getDIDDocument = await DIDregistry.getDIDDocument(name);
-      console.log(getDIDDocument);
-
+      
 
 
 
     }
-
-    // Write logic here
   }
 
+  
+  const addController = async () => {
+    const controller = await DIDregistry.addController(name, '');
+    console.log(controller);
 
-  return (
-    <>
-      <div className="flex flex-row w-full absolute pt-4 justify-center items-center">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-      </div>
-      <div className="h-screen flex items-center justify-center w-[72vw] mx-auto">
-        <Card className="w-[400px]">
-          <CardHeader>
-            <CardTitle>UBID</CardTitle>
-            <CardDescription>Create your UBID here.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Wallet Address</Label>
-                <Input
-                  id="name"
-                  placeholder="Wallet address"
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="address">Credit Card</Label>
-                <Input
-                  id="address"
-                  placeholder="Your UBIT card address here"
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Your email here"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-col gap-4">
-            <Button className="w-full" onClick={handleSubmit}>Deploy</Button>
+  }
 
+  const showController = async () => {
+    const controller = await DIDregistry.addController(name, '');
+    console.log(controller);
+
+  }
+  const printDIDDocument = async () => {
+    const getDIDDocument = await DIDregistry.getDIDDocument(name);
+    console.log(getDIDDocument);
+  }
+  const addcontroller = async()=> {
+    const add_controller = await DIDregistry.addController(name,Controller_address);
+    console.log(add_controller);
+
+  }
+  const removecontroller = async()=>{
+    const remove_controller = await DIDregistry.removeController(name,Controller_address);
+    console.log(remove_controller); 
+
+  }
+  
+
+return (
+  <>
+    <div className="flex flex-row w-full absolute pt-4 justify-center items-center">
+      <h1 className="text-2xl font-bold">Dashboard</h1>
+    </div>
+    <div className="h-screen flex items-center justify-center w-[72vw] mx-auto">
+      <Card className="w-[400px]">
+        <CardHeader>
+          <CardTitle>UBID</CardTitle>
+          <CardDescription>Create your DID here for the UBIT ecosystem</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="address">DID </Label>
+              <Label htmlFor="name">Wallet Address</Label>
               <Input
-                id="address"
-                placeholder="Your DID here"
-                value={did}
+                id="name"
+                placeholder="Wallet address"
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="address">Attribute</Label>
+              <Input
+                id="attribute"
+                placeholder="name of the attribute"
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Your email here"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="email">Validity</Label>
+              <Input
+                id="vaildity"
+                type="days"
+                placeholder="validity timeperiod for the attribute"
+                onChange={(e) => settime(e.target.value)}
+              />
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-4">
+          <Button className="w-full" onClick={handleSubmit}>Generate</Button>
 
-          </CardFooter>
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="address">DID</Label>
+            <Input
+              id="address"
+              placeholder="Your DID here"
+              value={did}
+            />
+          </div>
+          <Button className="w-full" onClick={printDIDDocument}>DID document</Button>
 
-        </Card>
-      </div>
-    </>
-  );
+        </CardFooter>
+
+      </Card>
+    </div>
+  </>
+);
+  
 }
