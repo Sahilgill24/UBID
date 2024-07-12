@@ -299,7 +299,10 @@ See the [open issues](https://github.com/Sahilgill24/UBID/issues) for a full lis
 
 ## Research
 
+These are the resources I used for the hackathon for understanding and implementation of DID's
 https://www.w3.org/TR/did-core/
+https://www.youtube.com/watch?v=t8lMCmjPKq4
+
 
 
 <!-- CONTRIBUTING -->
