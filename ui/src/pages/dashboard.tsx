@@ -19,24 +19,14 @@ export default function Dashboard() {
   const [email, setEmail] = useState("");
   const [did, setDID] = useState("");
 
-  const provider = new ethers.providers.JsonRpcProvider('https://rpc.ubitscan.io/');
-  const signer = provider.getSigner();
-  const wallet = new ethers.Wallet('76585d57ace9d6a5baa80855f462f470aceaeecf3b7999a076ea5b9b861d1370', provider)
+  const provider = new ethers.providers.JsonRpcProvider('https://testnet-rpc.ubitscan.io/');
+  const signer = provider.getSigner('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
+  const wallet = new ethers.Wallet('6b99711d264ac83b798ec10389f34afe53e6f6c6fdbb821b139aba9fd4cf9f2c', provider)
 
-  const contractAddress = '0xc87b9bEF7f65466c1Aa9ebcC1efB44DBAAFCc361';
+  const contractAddress = '0x35F72125fF89E35E009Def8d5ab3342ceF3de18d';
   // testnet : 0x634c418B3510000c6Fffe7d5ACbcdC07c865267F
+  // 0x35F72125fF89E35E009Def8d5ab3342ceF3de18d baseDID registry
   const abi = [
-    {
-      "type": "constructor",
-      "inputs": [
-        {
-          "name": "_minKeyRotationTime",
-          "type": "uint256",
-          "internalType": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable"
-    },
     {
       "type": "function",
       "name": "addController",
@@ -57,61 +47,10 @@ export default function Dashboard() {
     },
     {
       "type": "function",
-      "name": "changeController",
+      "name": "generateDID",
       "inputs": [
         {
-          "name": "identity",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "newController",
-          "type": "address",
-          "internalType": "address"
-        }
-      ],
-      "outputs": [],
-      "stateMutability": "nonpayable"
-    },
-    {
-      "type": "function",
-      "name": "changeControllerSigned",
-      "inputs": [
-        {
-          "name": "identity",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "sigV",
-          "type": "uint8",
-          "internalType": "uint8"
-        },
-        {
-          "name": "sigR",
-          "type": "bytes32",
-          "internalType": "bytes32"
-        },
-        {
-          "name": "sigS",
-          "type": "bytes32",
-          "internalType": "bytes32"
-        },
-        {
-          "name": "newController",
-          "type": "address",
-          "internalType": "address"
-        }
-      ],
-      "outputs": [],
-      "stateMutability": "nonpayable"
-    },
-    {
-      "type": "function",
-      "name": "changed",
-      "inputs": [
-        {
-          "name": "",
+          "name": "walletAddress",
           "type": "address",
           "internalType": "address"
         }
@@ -119,83 +58,15 @@ export default function Dashboard() {
       "outputs": [
         {
           "name": "",
-          "type": "uint256",
-          "internalType": "uint256"
+          "type": "string",
+          "internalType": "string"
         }
       ],
-      "stateMutability": "view"
+      "stateMutability": "pure"
     },
     {
       "type": "function",
-      "name": "controllers",
-      "inputs": [
-        {
-          "name": "",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "",
-          "type": "uint256",
-          "internalType": "uint256"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "",
-          "type": "address",
-          "internalType": "address"
-        }
-      ],
-      "stateMutability": "view"
-    },
-    {
-      "type": "function",
-      "name": "disableKeyRotation",
-      "inputs": [
-        {
-          "name": "identity",
-          "type": "address",
-          "internalType": "address"
-        }
-      ],
-      "outputs": [],
-      "stateMutability": "nonpayable"
-    },
-    {
-      "type": "function",
-      "name": "enableKeyRotation",
-      "inputs": [
-        {
-          "name": "identity",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "keyRotationTime",
-          "type": "uint256",
-          "internalType": "uint256"
-        }
-      ],
-      "outputs": [],
-      "stateMutability": "nonpayable"
-    },
-    {
-      "type": "function",
-      "name": "getControllers",
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "",
-          "type": "address[]",
-          "internalType": "address[]"
-        }
-      ],
-      "stateMutability": "view"
-    },
-    {
-      "type": "function",
-      "name": "identityController",
+      "name": "getDIDDocument",
       "inputs": [
         {
           "name": "identity",
@@ -206,27 +77,8 @@ export default function Dashboard() {
       "outputs": [
         {
           "name": "",
-          "type": "address",
-          "internalType": "address"
-        }
-      ],
-      "stateMutability": "view"
-    },
-    {
-      "type": "function",
-      "name": "nonce",
-      "inputs": [
-        {
-          "name": "",
-          "type": "address",
-          "internalType": "address"
-        }
-      ],
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256",
-          "internalType": "uint256"
+          "type": "string",
+          "internalType": "string"
         }
       ],
       "stateMutability": "view"
@@ -262,49 +114,6 @@ export default function Dashboard() {
           "name": "name",
           "type": "bytes",
           "internalType": "bytes"
-        },
-        {
-          "name": "value",
-          "type": "bytes",
-          "internalType": "bytes"
-        }
-      ],
-      "outputs": [],
-      "stateMutability": "nonpayable"
-    },
-    {
-      "type": "function",
-      "name": "revokeAttributeSigned",
-      "inputs": [
-        {
-          "name": "identity",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "sigV",
-          "type": "uint8",
-          "internalType": "uint8"
-        },
-        {
-          "name": "sigR",
-          "type": "bytes32",
-          "internalType": "bytes32"
-        },
-        {
-          "name": "sigS",
-          "type": "bytes32",
-          "internalType": "bytes32"
-        },
-        {
-          "name": "name",
-          "type": "bytes",
-          "internalType": "bytes"
-        },
-        {
-          "name": "value",
-          "type": "bytes",
-          "internalType": "bytes"
         }
       ],
       "outputs": [],
@@ -318,49 +127,6 @@ export default function Dashboard() {
           "name": "identity",
           "type": "address",
           "internalType": "address"
-        },
-        {
-          "name": "name",
-          "type": "bytes",
-          "internalType": "bytes"
-        },
-        {
-          "name": "value",
-          "type": "bytes",
-          "internalType": "bytes"
-        },
-        {
-          "name": "validity",
-          "type": "uint256",
-          "internalType": "uint256"
-        }
-      ],
-      "outputs": [],
-      "stateMutability": "nonpayable"
-    },
-    {
-      "type": "function",
-      "name": "setAttributeSigned",
-      "inputs": [
-        {
-          "name": "identity",
-          "type": "address",
-          "internalType": "address"
-        },
-        {
-          "name": "sigV",
-          "type": "uint8",
-          "internalType": "uint8"
-        },
-        {
-          "name": "sigR",
-          "type": "bytes32",
-          "internalType": "bytes32"
-        },
-        {
-          "name": "sigS",
-          "type": "bytes32",
-          "internalType": "bytes32"
         },
         {
           "name": "name",
@@ -404,13 +170,13 @@ export default function Dashboard() {
           "internalType": "bytes"
         },
         {
-          "name": "validTo",
+          "name": "validity",
           "type": "uint256",
           "indexed": false,
           "internalType": "uint256"
         },
         {
-          "name": "previousChange",
+          "name": "lastUpdated",
           "type": "uint256",
           "indexed": false,
           "internalType": "uint256"
@@ -435,7 +201,7 @@ export default function Dashboard() {
           "internalType": "address"
         },
         {
-          "name": "previousChange",
+          "name": "lastUpdated",
           "type": "uint256",
           "indexed": false,
           "internalType": "uint256"
@@ -445,27 +211,32 @@ export default function Dashboard() {
     }
   ]
 
-  const DIDregistry = new ethers.Contract(contractAddress, abi, wallet,);
+  const DIDregistry = new ethers.Contract(contractAddress, abi, wallet);
 
 
   const handleSubmit = async () => {
     setName(name)
+    const DID = await DIDregistry.generateDID(name);
+    console.log(DID);
+    setDID(DID);
+    console.log(name)
+    if (address || email) {
+      const credit_c = ethers.utils.formatBytes32String(address);
+      const email_c = ethers.utils.formatBytes32String(email);
+      const validity = 3600;
+      const setattribute = await DIDregistry.setAttribute(name, credit_c, email_c, validity, { gasLimit: '1000000' });
+      console.log(setattribute.hash);
+      const getDIDDocument = await DIDregistry.getDIDDocument(name);
+      console.log(getDIDDocument);
 
 
-    const did = await DIDregistry.identityController(name);
-    console.log(did);
-    const did_method = 'did:ubit:' + did;
-    setDID(did_method);
+
+
+    }
+
     // Write logic here
   }
-  const trial = async () => {
-    const did_controller = await DIDregistry.changeController(name, '0xaC6DF62364e0A8359E5687AfB743f92750c25aD0');
-    console.log(did_controller);
-    // const controllers = await DIDregistry.getcontrollers();
-    // console.log(controllers);
 
-
-  }
 
   return (
     <>
@@ -509,7 +280,7 @@ export default function Dashboard() {
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
             <Button className="w-full" onClick={handleSubmit}>Deploy</Button>
-            <Button className="w-full" onClick={trial}>Trial</Button>
+
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="address">DID </Label>
               <Input

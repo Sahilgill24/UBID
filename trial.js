@@ -1,438 +1,215 @@
 const { ethers } = require('ethers');
 
 
-const provider = new ethers.providers.JsonRpcProvider('https://rpc.ubitscan.io/');
-const wallet = new ethers.Wallet('76585d57ace9d6a5baa80855f462f470aceaeecf3b7999a076ea5b9b861d1370', provider)
-
-const contractAddress = '0xc87b9bEF7f65466c1Aa9ebcC1efB44DBAAFCc361';
+const provider = new ethers.providers.JsonRpcProvider('https://rpc2.sepolia.org');
+const wallet = new ethers.Wallet('6b99711d264ac83b798ec10389f34afe53e6f6c6fdbb821b139aba9fd4cf9f2c', provider)
+const signer = provider.getSigner('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
+const contractAddress = '0x71CdB782a3c1c18BB3dC565869fc8846bd81bb71';
 const abi = [
   {
-    "type": "constructor",
+    "anonymous": false,
     "inputs": [
       {
-        "name": "_minKeyRotationTime",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "addController",
-    "inputs": [
-      {
+        "indexed": true,
+        "internalType": "address",
         "name": "identity",
-        "type": "address",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "name": "controller",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "changeController",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "newController",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "changeControllerSigned",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "sigV",
-        "type": "uint8",
-        "internalType": "uint8"
-      },
-      {
-        "name": "sigR",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "sigS",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "newController",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "changed",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "controllers",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "disableKeyRotation",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "enableKeyRotation",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "keyRotationTime",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "getControllers",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address[]",
-        "internalType": "address[]"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "identityController",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "nonce",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
-  },
-  {
-    "type": "function",
-    "name": "removeController",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "controller",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "revokeAttribute",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
+        "indexed": false,
+        "internalType": "bytes",
         "name": "name",
-        "type": "bytes",
-        "internalType": "bytes"
+        "type": "bytes"
       },
       {
+        "indexed": false,
+        "internalType": "bytes",
         "name": "value",
-        "type": "bytes",
-        "internalType": "bytes"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "revokeAttributeSigned",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
+        "type": "bytes"
       },
       {
-        "name": "sigV",
-        "type": "uint8",
-        "internalType": "uint8"
-      },
-      {
-        "name": "sigR",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "sigS",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "name",
-        "type": "bytes",
-        "internalType": "bytes"
-      },
-      {
-        "name": "value",
-        "type": "bytes",
-        "internalType": "bytes"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "setAttribute",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "name",
-        "type": "bytes",
-        "internalType": "bytes"
-      },
-      {
-        "name": "value",
-        "type": "bytes",
-        "internalType": "bytes"
-      },
-      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "validity",
-        "type": "uint256",
-        "internalType": "uint256"
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "lastUpdated",
+        "type": "uint256"
       }
     ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "setAttributeSigned",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "sigV",
-        "type": "uint8",
-        "internalType": "uint8"
-      },
-      {
-        "name": "sigR",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "sigS",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      },
-      {
-        "name": "name",
-        "type": "bytes",
-        "internalType": "bytes"
-      },
-      {
-        "name": "value",
-        "type": "bytes",
-        "internalType": "bytes"
-      },
-      {
-        "name": "validity",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "event",
     "name": "DIDAttributeChanged",
-    "inputs": [
-      {
-        "name": "identity",
-        "type": "address",
-        "indexed": true,
-        "internalType": "address"
-      },
-      {
-        "name": "name",
-        "type": "bytes",
-        "indexed": false,
-        "internalType": "bytes"
-      },
-      {
-        "name": "value",
-        "type": "bytes",
-        "indexed": false,
-        "internalType": "bytes"
-      },
-      {
-        "name": "validTo",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      },
-      {
-        "name": "previousChange",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      }
-    ],
-    "anonymous": false
+    "type": "event"
   },
   {
-    "type": "event",
-    "name": "DIDControllerChanged",
+    "anonymous": false,
     "inputs": [
       {
-        "name": "identity",
-        "type": "address",
         "indexed": true,
-        "internalType": "address"
+        "internalType": "address",
+        "name": "identity",
+        "type": "address"
       },
       {
+        "indexed": false,
+        "internalType": "address",
         "name": "controller",
-        "type": "address",
-        "indexed": false,
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "name": "previousChange",
-        "type": "uint256",
         "indexed": false,
-        "internalType": "uint256"
+        "internalType": "uint256",
+        "name": "lastUpdated",
+        "type": "uint256"
       }
     ],
-    "anonymous": false
+    "name": "DIDControllerChanged",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "identity",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "controller",
+        "type": "address"
+      }
+    ],
+    "name": "addController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "walletAddress",
+        "type": "address"
+      }
+    ],
+    "name": "generateDID",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "identity",
+        "type": "address"
+      }
+    ],
+    "name": "getDIDDocument",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "identity",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "controller",
+        "type": "address"
+      }
+    ],
+    "name": "removeController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "identity",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "name",
+        "type": "bytes"
+      }
+    ],
+    "name": "revokeAttribute",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "identity",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "name",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes",
+        "name": "value",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint256",
+        "name": "validity",
+        "type": "uint256"
+      }
+    ],
+    "name": "setAttribute",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]
 
 const contract = new ethers.Contract(contractAddress, abi, wallet);
 
 async function main() {
-  const tx=await contract.addController('0x67ff09c184d8e9e7B90C5187ED04cbFbDba741C8', '0xaC6DF62364e0A8359E5687AfB743f92750c25aD0', { gasLimit: '5000000' })
-  //const trial = await contract.identityController('0x67ff09c184d8e9e7B90C5187ED04cbFbDba741C8');
-  console.log(trial)
+
+  // const tx = await contract.generateDID('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
+  // console.log(tx);
+  // const controller_added = await contract.addController('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4','0x67ff09c184d8e9e7B90C5187ED04cbFbDba741C8',{ gasLimit: '1000000' });
+  // //const trial = await contract.identityController('0x67ff09c184d8e9e7B90C5187ED04cbFbDba741C8');
+  // console.log(controller_added);
+  // const controller_removed=await contract.removeController('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4','0x67ff09c184d8e9e7B90C5187ED04cbFbDba741C8',{ gasLimit: '1000000' });
+  // console.log(controller_removed);
+  // const name = ethers.utils.formatBytes32String("email");
+  // const value = ethers.utils.formatBytes32String("user@example.com");
+  // const validity=3600;
+  // const attribute = await contract.setAttribute('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4',name,value,validity,{ gasLimit: '1000000' });
+  // console.log(attribute);
+  const did_document = await contract.getDIDDocument('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
+  console.log(did_document);
   //const controllers = await contract.changeController('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4', '0xaC6DF62364e0A8359E5687AfB743f92750c25aD0', { gasLimit: '1000000' })
-  console.log(controllers);
+
 }
 
 main();
