@@ -1,0 +1,43 @@
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4",
+    "controller": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4"
+    ],
+    "verificationMethod": [
+        {
+            "id": "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0",
+            "type": "Secp256k1VerificationKey2018",
+            "controller": "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4",
+            "publicKeyHex": "0x8f26d683822e60d522b58f7db63d352cb7fae6e4"
+        }
+    ],
+    "authentication": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "capabilityInvocation": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "capabilityDelegation": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "assertionMethod": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "keyAgreement": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "service": [
+        {
+            "id": "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#mailbox",
+            "type": "DIDComm",
+            "serviceEndpoint": "http://localhost:5173/network"
+        }
+    ],
+    "attributes": {
+        "0x120d9a3c10568303ea1744ea1c17ec39fbca86bc": {
+            "value": "",
+            "validity": 0
+        }
+    }
+}

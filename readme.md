@@ -34,7 +34,7 @@
     
   </a>
 
-<h3 align="center">UBID</h3>
+<h1 align="center">UBID</h1>
 
   <p align="center">
      <b>UBID</b> facilitates distributed key generation using <b>FROST</b>, a threshold Schnorr signature scheme. Participants contribute to a multi-party computation protocol, generating key shares without learning the complete secret. Made on top of the <b><a href="https://fluence.dev/">Fluence Netowork</a></b> providing decentralized serverless compute/
@@ -86,7 +86,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Product Name Screen Shot][product-screenshot]
+<img src='./ui/src/images/1.png'></img>
+
+
+UBID is a decentralized identity (DID) solution designed specifically for the UBIT ecosystem, providing robust and secure identity management capabilities. Built on blockchain technology, UBID offers unique identifiers that are cryptographically verifiable and self-owned, empowering users with control over their digital identities without relying on centralized authorities. It enables seamless integration across UBIT's ecosystem, allowing users to manage attributes, authenticate transactions, and interact securely with decentralized applications (DApps). UBID enhances privacy, security, and interoperability within UBIT, ensuring trustworthy and efficient digital identity management for all participants
 
 
 
@@ -94,7 +97,59 @@
 
 ## Understanding UBID
 
+A DID is an Identifier that allows you to lookup a DID document that can be used to authenticate you and messages created by you.
+Any Ethereum account regardless of whether it's a key pair or smart contract based is considered to be an account identifier.
+An identity needs no registration.
 
+Each identity has multiple address which maintains ultimate control over it, which are called the controllers of the DID. By default, each identity is controlled by itself. As ongoing technological and security improvements occur.
+Now coming to the DID document 
+A DID (Decentralized Identifier) document is a JSON-LD (JSON Linked Data) format document that encapsulates essential information about a decentralized identifier. It serves as a structured representation of an entity's digital identity within decentralized identity systems
+```
+{
+    "@context": "https://www.w3.org/ns/did/v1",
+    "id": "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4",
+    "controller": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4"
+    ],
+    "verificationMethod": [
+        {
+            "id": "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0",
+            "type": "Secp256k1VerificationKey2018",
+            "controller": "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4",
+            "publicKeyHex": "0x8f26d683822e60d522b58f7db63d352cb7fae6e4"
+        }
+    ],
+    "authentication": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "capabilityInvocation": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "capabilityDelegation": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "assertionMethod": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "keyAgreement": [
+        "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#vm-0"
+    ],
+    "service": [
+        {
+            "id": "did:ubit:0x8f26d683822e60d522b58f7db63d352cb7fae6e4#mailbox",
+            "type": "DIDComm",
+            "serviceEndpoint": "http://localhost:5173/network"
+        }
+    ],
+    "attributes": {
+        "0x120d9a3c10568303ea1744ea1c17ec39fbca86bc": {
+            "value": "",
+            "validity": 0
+        }
+    }
+}
+```
+Now as you understand the basics of what a DID is moving on to the implementation of UBID and how it works 
     
     
     
@@ -169,7 +224,6 @@ Use Ethereum wallets or applications to interact with the deployed contract:
   
 4. **Revoking Attributes**: Remove attributes (`revokeAttribute`) when they are no longer needed or valid, maintaining the integrity and relevance of DID attributes over time.
 
-## Development
 
 ### Requirements
 
@@ -177,29 +231,47 @@ Use Ethereum wallets or applications to interact with the deployed contract:
   
 - **Development Environment**: Ethereum development tools (Remix, Truffle, Hardhat) for contract deployment, testing, and interaction.
 
-### Testing
 
-Implement unit tests using frameworks like Truffle or Hardhat to validate contract functionality. Test scenarios should cover attribute setting, controller management, DID document retrieval, and edge cases to ensure contract robustness.
+
+
+## Future
+
+
+
+### Project Vision
+
+- UBID is currently based on a ledger-based blockchain for decentralized identity management.
+- The project aims to expand to integrate with web-based technologies and other decentralized ecosystems.
+
+### Current Contract and Limitations
+
+- Utilizes the `DIDRegistryBase.sol` contract for basic DID management.
+- Lacks key rotation mechanisms due to concerns over gas consumption during implementation.
+
+## Future Roadmap
+
+### Key Rotations Implementation
+
+- Implement key rotation mechanisms within `DIDRegistryBase.sol` to enhance DID security.
+
+### Gas Optimization
+
+- Optimize gas consumption for key rotations and other contract functionalities.
+
+### Expansion to Web and Beyond
+
+- Extend UBID's functionality beyond blockchain ledger systems.
+- Integrate with web-based platforms and diverse decentralized ecosystems.
+
+## Get Involved
+
+- Contributions and feedback are welcome from developers, researchers, and enthusiasts.
+- Join the community to contribute to UBID's evolution in decentralized identity management.
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
-
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-
-
-### Installation
 
 
 
@@ -210,16 +282,12 @@ To get a local copy up and running follow these simple example steps.
 
 
 
-<!-- USAGE EXAMPLES -->
-## Usage
 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- ROADMAP -->
-## Roadmap
+
 
 
 
@@ -228,6 +296,8 @@ See the [open issues](https://github.com/Sahilgill24/UBID/issues) for a full lis
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Research
+
+https://www.w3.org/TR/did-core/
 
 
 <!-- CONTRIBUTING -->
