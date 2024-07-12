@@ -149,11 +149,13 @@ A DID (Decentralized Identifier) document is a JSON-LD (JSON Linked Data) format
     }
 }
 ```
-Now as you understand the basics of what a DID is moving on to the implementation of UBID and how it works 
+Now as you understand the basics of what a DID is moving on to the implementation of UBID and how it works, also a point to note it follows the ERC-105 standard and also is compliant with the W3C standards 
     
     
-    
-    
+<img src='./ui/src/images/1.png'></img>
+
+
+
 # Implementation of UBID
 
 
