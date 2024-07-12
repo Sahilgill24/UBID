@@ -1,11 +1,4 @@
-const { ethers } = require('ethers');
-
-
-const provider = new ethers.providers.JsonRpcProvider('https://rpc.ubitscan.io/');
-const wallet = new ethers.Wallet('76585d57ace9d6a5baa80855f462f470aceaeecf3b7999a076ea5b9b861d1370', provider)
-
-const contractAddress = '0xc87b9bEF7f65466c1Aa9ebcC1efB44DBAAFCc361';
-const abi = [
+[
   {
     "type": "constructor",
     "inputs": [
@@ -424,15 +417,3 @@ const abi = [
     "anonymous": false
   }
 ]
-
-const contract = new ethers.Contract(contractAddress, abi, wallet);
-
-async function main() {
-  const tx=await contract.addController('0x67ff09c184d8e9e7B90C5187ED04cbFbDba741C8', '0xaC6DF62364e0A8359E5687AfB743f92750c25aD0', { gasLimit: '5000000' })
-  //const trial = await contract.identityController('0x67ff09c184d8e9e7B90C5187ED04cbFbDba741C8');
-  console.log(trial)
-  //const controllers = await contract.changeController('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4', '0xaC6DF62364e0A8359E5687AfB743f92750c25aD0', { gasLimit: '1000000' })
-  console.log(controllers);
-}
-
-main();
