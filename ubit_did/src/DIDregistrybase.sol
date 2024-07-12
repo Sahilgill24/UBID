@@ -185,4 +185,11 @@ contract DIDRegistryBase {
         if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
         else return bytes1(uint8(b) + 0x57);
     }
+    function getAttribute(address identity, bytes calldata name) external view returns (bytes memory value) {
+        DIDDocument storage doc = didDocuments[identity];
+        bytes32 nameHash = keccak256(name);
+        Attribute storage attribute = doc.attributes[nameHash];
+        return (attribute.value);
+}
+
 }
