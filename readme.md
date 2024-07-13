@@ -227,6 +227,8 @@ Use Ethereum wallets or applications to interact with the deployed contract:
 4. **Revoking Attributes**: Remove attributes (`revokeAttribute`) when they are no longer needed or valid, maintaining the integrity and relevance of DID attributes over time.
 
 
+```contract address: 0xf45DC743cb3122bfF9135c5C8FDc9EA88e74116D```
+
 ### Requirements
 
 - **Solidity Version**: ^0.8.19 (or compatible with required libraries)
