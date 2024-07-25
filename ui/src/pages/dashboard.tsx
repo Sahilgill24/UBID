@@ -32,8 +32,9 @@ export default function Dashboard() {
   // const signer = provider.getSigner('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
   const wallet = new ethers.Wallet(import.meta.env.VITE_PRIVATE_KEY, provider)
 
-  const contractAddress = '0xf45DC743cb3122bfF9135c5C8FDc9EA88e74116D';
-  // final contract address: 0xf45DC743cb3122bfF9135c5C8FDc9EA88e74116D
+  const contractAddress = '0xc87b9bEF7f65466c1Aa9ebcC1efB44DBAAFCc361';
+  
+  // final contract address testnet: 0xf45DC743cb3122bfF9135c5C8FDc9EA88e74116D
   // testnet : 0x634c418B3510000c6Fffe7d5ACbcdC07c865267F
   // 0x35F72125fF89E35E009Def8d5ab3342ceF3de18d baseDID registry
   

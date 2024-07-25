@@ -33,7 +33,7 @@ anvil :; anvil -m 'test test test test test test test test test test test junk' 
 NETWORK_ARGS := --rpc-url http://localhost:8545 --private-key $(DEFAULT_ANVIL_KEY) --broadcast
 
 ifeq ($(findstring --network ubit,$(ARGS)),--network ubit)
-	NETWORK_ARGS := --rpc-url $(UBIT_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast  -vvvv
+	NETWORK_ARGS :=--legacy --rpc-url $(UBIT_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast  -vvvv 
 endif
 
 deploy:
