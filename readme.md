@@ -36,6 +36,8 @@
 
 <h1 align="center">UBID</h1>
 
+<u><h3>It won the <a href='https://dorahacks.io/buidl/14202'>most Potential Project award</a> for the Hackathon in the WEb3 Track</h3></u>
+
   <p align="center">
      <b>UBID</b> is a DID solution for the UBIT ecosystem 
     <br />
