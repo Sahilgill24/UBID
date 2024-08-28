@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { ethers } from "ethers";
 import { getIcapAddress } from "ethers/lib/utils";
-import {abi} from '../abi/abi';
+import { abi } from '../abi/abi';
 
 
 
@@ -28,16 +28,18 @@ export default function Dashboard() {
   const [attribute_name, setattribute_name] = useState('');
   const [attribute_value, setattribute_value] = useState('');
 
-  const provider = new ethers.providers.JsonRpcProvider('https://testnet-rpc.ubitscan.io/');
+  const provider = new ethers.providers.JsonRpcProvider('https://rpc.ubitscan.io/');
   // const signer = provider.getSigner('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
+
   const wallet = new ethers.Wallet(import.meta.env.VITE_PRIVATE_KEY, provider)
 
-  const contractAddress = '0xc87b9bEF7f65466c1Aa9ebcC1efB44DBAAFCc361';
-  
+  const contractAddress = '0x4Fe69Cd32a54139e624Cd75B48DE3cF9C36DA79a';
+
   // final contract address testnet: 0xf45DC743cb3122bfF9135c5C8FDc9EA88e74116D
   // testnet : 0x634c418B3510000c6Fffe7d5ACbcdC07c865267F
   // 0x35F72125fF89E35E009Def8d5ab3342ceF3de18d baseDID registry
-  
+  // mainnet : 0xc87b9bEF7f65466c1Aa9ebcC1efB44DBAAFCc361
+
 
 
   const DIDregistry = new ethers.Contract(contractAddress, abi, wallet);
@@ -63,32 +65,32 @@ export default function Dashboard() {
   }
 
 
-  
+
 
 
   const printDIDDocument = async () => {
-    const getDIDDocument = await DIDregistry.getDIDDocument(name);
-    console.log(getDIDDocument);
+    // const getDIDDocument = await DIDregistry.getDIDDocument(name);
+    // console.log(getDIDDocument);
   }
   const addController = async () => {
-    const add_controller = await DIDregistry.addController(name, Controller_address,{ gasLimit: '1000000' });
+    const add_controller = await DIDregistry.addController(name, Controller_address, { gasLimit: '1000000' });
     console.log(add_controller.hash);
 
 
   }
   const removecontroller = async () => {
-    const remove_controller = await DIDregistry.removeController(name, remove_address,{ gasLimit: '1000000' });
+    const remove_controller = await DIDregistry.removeController(name, remove_address, { gasLimit: '1000000' });
     console.log(remove_controller.hash);
 
   }
   const get_attribute = async () => {
     const attribute_final = ethers.utils.formatBytes32String(attribute_name);
-    const get_attribute = await DIDregistry.getAttribute(c_address, attribute_final,{ gasLimit: '1000000' });
+    const get_attribute = await DIDregistry.getAttribute(c_address, attribute_final, { gasLimit: '1000000' });
     setattribute_value(get_attribute);
     console.log(get_attribute);
     console.log(ethers.utils.parseBytes32String(get_attribute));
 
-    
+
 
   }
 
