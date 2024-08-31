@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { ethers } from "ethers";
 import { abi } from '../abi/abi';
-import { useAccount, useConnect, } from "wagmi";
+import { useAccount, useConnect } from "wagmi";
 
 
 
