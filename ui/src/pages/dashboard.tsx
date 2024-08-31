@@ -11,8 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { ethers } from "ethers";
-import { getIcapAddress } from "ethers/lib/utils";
 import { abi } from '../abi/abi';
+import { useAccount, useConnect, } from "wagmi";
+
+
 
 
 
@@ -27,11 +29,16 @@ export default function Dashboard() {
   const [c_address, setc_address] = useState('');
   const [attribute_name, setattribute_name] = useState('');
   const [attribute_value, setattribute_value] = useState('');
+  const { connectors, connect } = useConnect();
+  // const { wallet_address } = useAccount();
+
 
   const provider = new ethers.providers.JsonRpcProvider('https://rpc.ubitscan.io/');
+  const account = useAccount();
+  console.log(account)
   // const signer = provider.getSigner('0x8F26D683822E60d522b58f7DB63D352CB7FAe6e4');
-
-  const wallet = new ethers.Wallet(import.meta.env.VITE_PRIVATE_KEY, provider)
+  const signer = provider.getSigner(account.address);
+  // const wallet = new ethers.Wallet(import.meta.env.VITE_PRIVATE_KEY, provider)
 
   const contractAddress = '0x4Fe69Cd32a54139e624Cd75B48DE3cF9C36DA79a';
 
@@ -42,7 +49,7 @@ export default function Dashboard() {
 
 
 
-  const DIDregistry = new ethers.Contract(contractAddress, abi, wallet);
+  const DIDregistry = new ethers.Contract(contractAddress, abi, signer);
 
 
   const handleSubmit = async () => {
@@ -68,10 +75,10 @@ export default function Dashboard() {
 
 
 
-  const printDIDDocument = async () => {
-    // const getDIDDocument = await DIDregistry.getDIDDocument(name);
-    // console.log(getDIDDocument);
-  }
+  // const printDIDDocument = async () => {
+  //   // const getDIDDocument = await DIDregistry.getDIDDocument(name);
+  //   // console.log(getDIDDocument);
+  // }
   const addController = async () => {
     const add_controller = await DIDregistry.addController(name, Controller_address, { gasLimit: '1000000' });
     console.log(add_controller.hash);
@@ -95,12 +102,23 @@ export default function Dashboard() {
   }
 
 
+
   return (
     <>
       <div className="flex flex-col w-full absolute pt-4 gap-7 justify-center items-center">
         <h1 className="text-8xl font-bold">UBID</h1>
         <h5 className="text-2xl underline">DID's for UBIT ecosystem</h5>
+        {account.address ?
+          <h5 className="text-sm underline">Wallet Address: {account.address}</h5>
+          : <Button
+            onClick={() => connect({ connector: connectors[0] })}
+            className="w-[200px] flex "
+
+          >
+            Connect
+          </Button>}
       </div>
+
       <div className="h-screen flex items-center justify-center w-full mx-auto gap-20">
         <Card className="w-[400px]">
           <CardHeader>
@@ -156,7 +174,7 @@ export default function Dashboard() {
                 value={did}
               />
             </div>
-            <Button className="w-full" onClick={printDIDDocument}>DID document</Button>
+            {/* <Button className="w-full" onClick={printDIDDocument}>DID document</Button> */}
 
           </CardFooter>
 
@@ -236,10 +254,19 @@ export default function Dashboard() {
 
 
 
+
           </CardFooter>
 
         </Card>
       </div>
+      <Button
+        onClick={() => connect({ connector: connectors[0] })}
+        size={"icon"}
+        variant={"outline"}
+
+      >
+
+      </Button>
       <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
     </>
   );
